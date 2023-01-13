@@ -1,0 +1,43 @@
+.pics-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-gap: 60px;
+  row-gap: 55px;
+  padding-top: 40px;
+}
+
+.pic-item {
+  margin: 10px auto;
+  display: flex;
+  background-color: #fff;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-user {
+  outline: none;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.pic {
+  width: 250px;
+}
+
+@media (min-width: 768px) {
+  .pics-list {
+    column-gap: 10px;
+  }
+
+  .pic {
+    width: 320px;
+  }
+}
