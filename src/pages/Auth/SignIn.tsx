@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast, { LoaderIcon, Toaster } from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import "./Auth.css";
@@ -8,6 +8,7 @@ const SignIn: FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const { signin } = useAuth();
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,8 +23,10 @@ const SignIn: FC = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       await signin(email, password);
       navigate("/editor");
+      setLoading(false);
     } catch {
       toast.error("Failed to sign in");
     }
@@ -66,6 +69,11 @@ const SignIn: FC = () => {
           Register now
         </NavLink>
       </h2>
+      {loading && (
+        <>
+          <h3>Loading </h3> <LoaderIcon />
+        </>
+      )}
     </div>
   );
 };

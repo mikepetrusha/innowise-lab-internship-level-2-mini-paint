@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast, { LoaderIcon, Toaster } from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import "./Auth.css";
@@ -99,6 +99,11 @@ const SignUp: FC = () => {
           Sign In
         </NavLink>
       </h2>
+      {loading && (
+        <>
+          <h3>Loading </h3> <LoaderIcon />
+        </>
+      )}
     </div>
   );
 };
