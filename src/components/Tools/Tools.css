@@ -29,13 +29,17 @@
   outline: none;
   background-color: transparent;
   color: #212529;
-  border: 1px solid gray;
   border-radius: 2px;
 }
 
 .tool-item:hover {
   transform: scale(1.1);
   color: orange;
+}
+
+.active {
+  color: red;
+  transform: scale(1.3);
 }
 
 .tooltip {
