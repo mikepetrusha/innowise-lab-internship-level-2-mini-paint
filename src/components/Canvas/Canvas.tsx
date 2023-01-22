@@ -37,7 +37,6 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
   };
 
   const drawLine = (x: number, y: number) => {
-    clear();
     ctx!.beginPath();
     ctx!.lineJoin = "round";
     ctx!.strokeStyle = color;
@@ -48,7 +47,6 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
   };
 
   const drawRectangle = (x: number, y: number) => {
-    clear();
     ctx!.strokeStyle = color;
     ctx!.lineWidth = +width;
     const recWidth = x - previousPosition.x;
@@ -59,6 +57,8 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
       recWidth,
       recHeight,
     );
+    ctx!.fillStyle = color;
+    ctx!.fillRect(previousPosition.x, previousPosition.y, recWidth, recHeight);
   };
 
   const drawCircle = (x: number, y: number) => {
@@ -67,7 +67,6 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
     const CircleWidth = x - previousPosition.x;
     const CircleHeight = y - previousPosition.y;
     const radius = Math.sqrt(CircleWidth ** 2 + CircleHeight ** 2);
-    clear();
     ctx!.beginPath();
     ctx!.arc(
       previousPosition.x,
@@ -78,6 +77,8 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
       false,
     );
     ctx!.stroke();
+    ctx!.fillStyle = color;
+    ctx!.fill();
   };
 
   const onMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -87,7 +88,18 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
     setIsMouseDown(true);
   };
 
-  const finishDraw = () => {
+  const finishDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (isMouseDown) {
+      switch (tool) {
+        case "line":
+          drawLine(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+
+        default:
+          draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+      }
+    }
     setIsMouseDown(false);
   };
 
@@ -97,9 +109,6 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
         case "pen":
           draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
           break;
-        case "line":
-          drawLine(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-          break;
         case "rectangle":
           drawRectangle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
           break;
@@ -107,7 +116,6 @@ export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
           drawCircle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
           break;
         default:
-          draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
           break;
       }
     }

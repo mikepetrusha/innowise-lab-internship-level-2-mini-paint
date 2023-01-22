@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import PenIcon from "../../asserts/PenIcon";
 import LineIcon from "../../asserts/LineIcon";
@@ -16,24 +16,29 @@ export default function Tools({
   setWidth,
   setTool,
 }: ITools) {
+  const [activeButton, setActiveButton] = useState<string | null>(null);
   const handleSetWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWidth(e.target.value);
   };
 
   const handleSetPen = () => {
     setTool("pen");
+    setActiveButton("pen");
   };
 
   const handleSetLine = () => {
     setTool("line");
+    setActiveButton("line");
   };
 
   const handleSetCircle = () => {
     setTool("circle");
+    setActiveButton("circle");
   };
 
   const handleSetRectangle = () => {
     setTool("rectangle");
+    setActiveButton("rectangle");
   };
 
   return (
@@ -64,26 +69,40 @@ export default function Tools({
           </button>
         </li>
         <li>
-          <button onClick={handleSetPen} className="tool-item" type="submit">
+          <button
+            onClick={handleSetPen}
+            className={`tool-item ${activeButton === "pen" ? "active" : ""}`}
+            type="submit"
+          >
             <PenIcon width="2em" height="2em" />
           </button>
         </li>
         <li>
-          <button onClick={handleSetLine} className="tool-item" type="submit">
+          <button
+            onClick={handleSetLine}
+            className={`tool-item ${activeButton === "line" ? "active" : ""}`}
+            type="submit"
+          >
             <LineIcon width="2em" height="2em" />
           </button>
         </li>
         <li>
           <button
             onClick={handleSetRectangle}
-            className="tool-item"
+            className={`tool-item ${
+              activeButton === "rectangle" ? "active" : ""
+            }`}
             type="submit"
           >
             <RectangleIcon width="2em" height="2em" />
           </button>
         </li>
         <li>
-          <button onClick={handleSetCircle} className="tool-item" type="submit">
+          <button
+            onClick={handleSetCircle}
+            className={`tool-item ${activeButton === "circle" ? "active" : ""}`}
+            type="submit"
+          >
             <CircleIcon width="2em" height="2em" />
           </button>
         </li>
